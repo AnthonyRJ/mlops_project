@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Anime Rating Prediction</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+
+    <body>
+        <h1>Anime Ratings Prediction</h1>
+
+        <form>
+            <div class="form-group">
+                <label for="title">Anime Title:</label>
+                <input type="text" id="title" name="title">
+            </div>
+
+            <div class="form-group">
+                <label for="genre">Anime Genre(s):</label>
+                <input type="text" id="genre" name="genre">
+            </div>
+
+            <div class="form-group">
+                <label for="description">Anime Description:</label>
+                <textarea id="description" name="description"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="type">Anime Type:</label>
+                <select id="type" name="type">
+                <option value="">--Select Type--</option>
+                <option value="TV">TV</option>
+                <option value="Movie">Movie</option>
+                <option value="OVA">OVA</option>
+                <option value="Special">Special</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="producer">Producer:</label>
+                <input type="text" id="producer" name="producer">
+            </div>
+
+            <div class="form-group">
+                <label for="studio">Anime Studio:</label>
+                <input type="text" id="studio" name="studio">
+            </div>
+
+            <button type="submit">Predict Ratings</button>
+        </form>
+        
+        <div id="prediction"></div>
+  </body>
+</html>
