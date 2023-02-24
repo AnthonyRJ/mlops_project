@@ -38,6 +38,32 @@ label {
     margin-bottom: 5px;
 }
 
+#genre, #producer, #anime-studio{
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-bottom: 12px;
+    font-size: 16px;
+    height: auto;
+    min-height: 40px;
+    max-height: 120px;
+    overflow-y: auto;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+/* Masque le curseur de la liste déroulante pour Webkit */
+/*select::-webkit-scrollbar {
+    display: none;
+}*/
+
+option {
+    padding: 3px 6px;
+}
+
 input[type="text"],
     textarea {
     width: 100%;
@@ -47,7 +73,27 @@ input[type="text"],
     resize: vertical;
 }
 
-select {
+/* Largeur de la barre de défilement */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+/* Fond de la barre de défilement */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Curseur de la barre de défilement */
+::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+/* Curseur de la barre de défilement au survol */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+#type{
     width: 100%;
     padding: 10px;
     border-radius: 5px;
