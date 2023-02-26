@@ -1,0 +1,45 @@
+global:  
+  scrape_interval: 5s
+scrape_configs:  
+  - job_name: 'prometheus'    
+    scrape_interval: 5s    
+    static_configs:      
+    - targets: ['localhost:9090']
+ 
+  - job_name: 'flask_app'    
+    scrape_interval: 5s    
+    metrics_path: '/metrics'    
+    static_configs:      
+      - targets: ['localhost:5000']
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets: ['localhost:9093']
+
+alert:
+  - name: high-cpu-usage
+    expr: sum by (instance) (irate(node_cpu_seconds_total{mode="idle"}[5m])) < 0.1
+    for: 1m
+    labels:
+      severity: critical
+    annotations:
+      summary: "High CPU usage detected"
+      description: "CPU usage is above 90% for the past 1 minute"
+
+  - name: low-memory
+    expr: (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes) * 100 < 10
+    for: 5m
+    labels:
+      severity: warning
+    annotations:
+      summary: "Low memory detected"
+      description: "Memory usage is above 90% for the past 5 minutes"
+
+  - name: request-count
+    expr: sum(rate(sample_app_requests_total[5m])) > 100
+    for: 1m
+    labels:
+      severity: warning
+    annotations:
+      summary: "High request count detected"
+      description: "Request count is above 100 requests per minute for the past 1 minute"
