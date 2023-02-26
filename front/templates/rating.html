@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Anime Rating Prediction</title>
+        <link rel="stylesheet" href="../static/css/style2.css">
+    </head>
+
+    <body>
+        <div class="container">
+            <h1>Anime Rating Prediction</h1>
+            <h2>User Input</h2>
+            <table>
+              <thead>
+                <tr>
+                  <th>Category</th>
+                  <th>Input</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Title</td>
+                  <td>{{ title }}</td>
+                </tr>
+                <tr>
+                  <td>Genres</td>
+                  <td>{{ ', '.join(genres)}}</td>
+                </tr>
+                <tr>
+                  <td>Description</td>
+                  <td>{{ description }}</td>
+                </tr>
+                <tr>
+                  <td>Anime Type</td>
+                  <td>{{ anime_type }}</td>
+                </tr>
+                <tr>
+                  <td>Producer</td>
+                  <td>{{ ', '.join(producer)}}</td>
+                </tr>
+                <tr>
+                  <td>Studio</td>
+                  <td>{{ ', '.join(studio)}}</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <h2>Prediction Result</h2>
+            <div class="prediction">
+              <p>The predicted rating is: {{ prediction }}</p>
+            </div>
+          </div>
+
+          <form action="/">
+            <div class="container-btn">
+                <button type="submit">Back to home</button>
+            </div>
+        </form>
+    </body>
+
+</html>
