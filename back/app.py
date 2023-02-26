@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, jsonify
+from flask import Flask, request, render_template
 import pandas as pd
 import joblib
 import re
@@ -6,8 +6,7 @@ import numpy as np
 import nltk
 from gensim.models import Word2Vec
 from sklearn.preprocessing import MinMaxScaler
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.metrics.pairwise import cosine_similarity
+
 
 app = Flask(__name__)
 
