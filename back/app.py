@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, jsonify
+from flask import Flask, request, render_template
 import pandas as pd
 import joblib
 import re
@@ -6,8 +6,6 @@ import numpy as np
 import nltk
 from gensim.models import Word2Vec
 from sklearn.preprocessing import MinMaxScaler
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.metrics.pairwise import cosine_similarity
 
 app = Flask(__name__)
 
@@ -15,9 +13,14 @@ app.static_folder = '../front/static'
 app.template_folder = '../front/templates'
 
 # Load the machine learning model
-model = joblib.load('./back/model.pkl')
+#model = joblib.load('./model.pkl')
+model = joblib.load('/app/model.pkl')
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/', methods=['GET'])
+def home():
+    return render_template('home.html')
+
+@app.route('/predict', methods=['POST'])
 def predict():
     if request.method == 'POST':
         # get user inputs from the form
@@ -36,7 +39,7 @@ def predict():
         df_preprocess = df_preprocess.drop("Synopsis", axis = 1)
 
         # create an empty dataset with the corresponding columns
-        with open('./back/cols.txt', 'r') as f:
+        with open('./cols.txt', 'r') as f:
             cols = f.read()
 
         cols=eval(cols)
@@ -58,7 +61,8 @@ def predict():
         return render_template('rating.html',title=title, genres=genres, description=description, anime_type=anime_type, producer=producer, studio=studio, prediction=prediction)
 
     # If the request method is GET, render the home template
-    return render_template('home.html')
+    
+
 
 def preprocess_text(text):
     # Remove ' \r\n \r\n' plus last sentence
@@ -131,25 +135,6 @@ def preprocess_data(df):
     df['Title'] = df['Title'].apply(lambda x : get_title_vector(x,model3))
     scaler = MinMaxScaler()
     df['Title'] = scaler.fit_transform(df['Title'].tolist())
-
-    # final preprocess for prediction
-    #vectorizer = TfidfVectorizer(stop_words='english')
-    #synopsis_matrix = vectorizer.fit_transform(df_preprocess['Synopsis'])
-    #similarity_matrix = cosine_similarity(synopsis_matrix)
-
-    #similar_movies_indices = {}
-    #for i, row in df.iterrows():
-    #    # remove the anime for its own list
-    #    similar_indices = similarity_matrix[i].argsort()[::-1][1:]
-    #    similar_movies_indices[i] = similar_indices
-
-    #predicted_ratings = []
-    #for i, row in df.iterrows():
-    #    similar_indices = similar_movies_indices[i]
-    #    similar_ratings = df.iloc[similar_indices]['Rating']
-    #    predicted_rating = similar_ratings.mean()
-    #    predicted_ratings.append(predicted_rating)
-    #df['Predicted_Rating'] = predicted_ratings
 
     return df
 
