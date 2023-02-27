@@ -31,7 +31,8 @@ pipeline {
                 echo 'Building Dodcker image...'
                 
                 sh """
-                    docker build -t mlops-flask
+                    docker build -t mlops-flask-app .
+                    docker run -d mlops-flask-app
                     docker ps
                 """
 
@@ -39,9 +40,11 @@ pipeline {
         }
         stage("Docker Push") {
             steps {
-                bat 'docker login --username=$DOCKER_USERNAME --password=$DOCKER_PASSWORD'
-                bat 'docker tag jenkins-flask-app necroz/mlopsrepo'
-                bat 'docker push necroz/mlopsrepo'
+                sh """
+                    bat 'docker login --username=$DOCKER_USERNAME --password=$DOCKER_PASSWORD'
+                    bat 'docker tag mlops-flask-app necroz/mlopsrepo'
+                    bat 'docker push necroz/mlopsrepo'
+                """
                 
             }
         }
