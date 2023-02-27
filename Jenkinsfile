@@ -2,26 +2,16 @@ pipeline {
     agent any
     environment {
         PATH = "C:/WINDOWS/SYSTEM32;C:/Users/Armand/AppData/Local/Programs/Python/Python38;C:/Program Files/Docker/Docker/resources/bin"
-        DOCKER_IMAGE = "docker-image-name"
-        DOCKER_USERNAME = ""
+        DOCKER_USERNAME = "necroz"
         DOCKER_PASSWORD = ""
-        DOCKER_REPO = ""
-        DOCKER_TAG = ""
     }
     stages {
         stage('Checkout'){
             steps{
                 echo 'Creating final to branch to merge with main...'
                 sh """ 
-                  # Complete here
-                """
-            }
-        }
-        stage('Build') {
-            steps {
-                echo 'Building...'
-                sh """
-                    # Complete here
+                  git checkout -b finalBranch
+                  git push -u origin finalBranch
                 """
             }
         }
@@ -29,7 +19,10 @@ pipeline {
             steps {
                 echo 'Testing...'
                 sh """
-                    # Complete here
+                    bat 'python -m pip install --upgrade pip'
+                    bat 'python -m pip install Flask'
+                    bat 'python -m pip install requests'
+                    bat 'python test_main.py'
                 """
             }
         }
@@ -38,7 +31,7 @@ pipeline {
                 echo 'Building Dodcker image...'
                 
                 sh """
-                    docker build -t $DOCKER_IMAGE
+                    docker build -t mlops-flask
                     docker ps
                 """
 
@@ -47,8 +40,8 @@ pipeline {
         stage("Docker Push") {
             steps {
                 bat 'docker login --username=$DOCKER_USERNAME --password=$DOCKER_PASSWORD'
-                bat 'docker tag jenkins-flask-app $DOCKER_REPO'
-                bat 'docker push $DOCKER_TAG'
+                bat 'docker tag jenkins-flask-app necroz/mlopsrepo'
+                bat 'docker push necroz/mlopsrepo'
                 
             }
         }
