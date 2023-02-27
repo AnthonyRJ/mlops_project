@@ -26,6 +26,15 @@ class FlaskTestCase(unittest.TestCase):
 
         assert self.assertIsInstance(result, float) and self.assertGreaterEqual(result, 0) and self.assertLessEqual(result, 10), f"The result is not what was expected"
         print("Test passed!")
+     
+    def stress_test(self):
+        start_time = time.monotonic()
+        for i in range(10):
+            with self.subTest(i=i):
+                self.test_predict()
+        end_time = time.monotonic()
+        execution_time = end_time - start_time
+        self.assertLess(execution_time, 60, "It took to much time (over the 60s).")
 
 if __name__ == '__main__':
     unittest.main()
