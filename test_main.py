@@ -9,23 +9,22 @@ class FlaskTestCase(unittest.TestCase):
     def test_home(self):
         response = self.app.get('/')
         self.assertEqual(response.status_code, 200)
-
+    
     def test_predict(self):
         input_data = {
             'title': 'SNK',
             'genre[]': ['Adventure', 'Action'],
             'description': 'Titan',
             'type': 'OVA',
-            'producer[]': ['', ''],
-            'studio[]': ['', '']
+            'producer[]': ['ToysFactory', '3xCube'],
+            'studio[]': ['33Collective', 'BrainsBase']
         }
         
-        response = requests.post("http://localhost:5000/", )
+        response = requests.post("http://localhost:5000/", input_data)
 
         result = response.json()
-        expected_result = {}
 
-        assert result == expected_result, f"Expected {expected_result} but got {result}"
+        assert self.assertIsInstance(result, float) and self.assertGreaterEqual(result, 0) and self.assertLessEqual(result, 10), f"The result is not what was expected"
         print("Test passed!")
 
 if __name__ == '__main__':
