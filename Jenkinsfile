@@ -23,6 +23,7 @@ pipeline {
                     bat 'python -m pip install Flask'
                     bat 'python -m pip install requests'
                     bat 'python test_main.py'
+                    bat 'python test_endtoend.py'
                 """
             }
         }
